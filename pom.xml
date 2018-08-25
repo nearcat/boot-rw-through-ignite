@@ -24,6 +24,7 @@
         <log4jdbc.version>0.2.7</log4jdbc.version>
         <h2.version>1.4.195</h2.version>
         <lombok.version>1.18.0</lombok.version>
+        <commons.db.version>1.7</commons.db.version>
     </properties>
 
     <dependencies>
@@ -56,6 +57,12 @@
 
         <dependency>
             <groupId>org.apache.ignite</groupId>
+            <artifactId>ignite-spring</artifactId>
+            <version>${ignite.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.ignite</groupId>
             <artifactId>ignite-slf4j</artifactId>
             <version>${ignite.version}</version>
         </dependency>
@@ -82,6 +89,12 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-dbutils</groupId>
+            <artifactId>commons-dbutils</artifactId>
+            <version>${commons.db.version}</version>
         </dependency>
 
         <dependency>
