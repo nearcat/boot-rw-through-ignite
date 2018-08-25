@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: boot-rw-through-ignite
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
+    cache-duration: PT1H
+server:
+  port: 8080
+ignite:
+  cluster:
+    nodes: 127.0.0.1:47500..47509
