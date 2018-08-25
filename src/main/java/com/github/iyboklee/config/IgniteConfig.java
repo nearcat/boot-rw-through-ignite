@@ -58,10 +58,10 @@ public class IgniteConfig {
     }
 
     @Bean
-    IgniteConfiguration igniteConfiguration(BookCacheStoreFactory bookCacheStoreFactory) {
+    IgniteConfiguration igniteConfiguration(DataSource dataSource, BookCacheStoreFactory bookCacheStoreFactory) {
         IgniteConfiguration igniteCfg = new IgniteConfiguration();
         igniteCfg.setClientMode(false);
-        igniteCfg.setPeerClassLoadingEnabled(false);
+        igniteCfg.setPeerClassLoadingEnabled(true);
 
         // Logger
         igniteCfg.setGridLogger(new Slf4jLogger());

@@ -28,8 +28,18 @@ public class BookCache {
         return cache.get(isbn);
     }
 
-    public void clear(String isbn) {
+    public void put(String isbn, Book book) {
+        assert isbn.equals(book.getIsbn());
+
+        cache.put(isbn, book);
+    }
+
+    public void cacheClear(String isbn) {
         cache.clear(isbn);
+    }
+
+    public void delete(String isbn) {
+        cache.remove(isbn);
     }
 
     public int size() {

@@ -1,4 +1,4 @@
-package com.github.iyboklee.config;
+package com.github.iyboklee.cache;
 
 import javax.cache.Cache;
 import javax.cache.integration.CacheLoaderException;
@@ -74,7 +74,7 @@ public class BookCacheStore extends CacheStoreAdapter<String, Book> {
             // Try update first. If it does not work, then try insert.
             try (PreparedStatement stmt = conn.prepareStatement("update books set title = ? where isbn = ?")) {
                 stmt.setString(1, value.getTitle());
-                stmt.setString(1, key);
+                stmt.setString(2, key);
                 updated = stmt.executeUpdate();
             }
             // If update failed, try to insert.

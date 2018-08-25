@@ -19,6 +19,8 @@
     <logger name="jdbc.sqlonly" level="OFF"/>
     <logger name="jdbc.sqltiming" level="INFO"/>
 
+    <logger name="com.github.iyboklee.cache" level="DEBUG"/>
+
     <root level="INFO">
         <appender-ref ref="console"/>
     </root>
