@@ -30,9 +30,12 @@ public class BookCacheStore extends CacheStoreAdapter<String, Book> {
     @CacheStoreSessionResource
     private CacheStoreSession session;
 
-    private DataSource dataSource;
+    private volatile DataSource dataSource;
 
-    public void setDataSource(DataSource dataSource) {
+    public BookCacheStore(DataSource dataSource) {
+        if (dataSource == null)
+            throw new IllegalArgumentException("DataSource is null");
+
         this.dataSource = dataSource;
     }
 
@@ -181,8 +184,6 @@ public class BookCacheStore extends CacheStoreAdapter<String, Book> {
     }
 
     private Connection openConnection(boolean autocommit) throws SQLException {
-        assert dataSource != null;
-
         Connection conn = dataSource.getConnection();
         conn.setAutoCommit(autocommit);
         return conn;

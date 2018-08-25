@@ -51,14 +51,7 @@ public class IgniteConfig {
     }
 
     @Bean
-    BookCacheStoreFactory bookCacheStoreFactory(DataSource dataSource) {
-        BookCacheStoreFactory factory = new BookCacheStoreFactory();
-        factory.setDataSource(dataSource);
-        return factory;
-    }
-
-    @Bean
-    IgniteConfiguration igniteConfiguration(DataSource dataSource, BookCacheStoreFactory bookCacheStoreFactory) {
+    IgniteConfiguration igniteConfiguration(DataSource dataSource) {
         IgniteConfiguration igniteCfg = new IgniteConfiguration();
         igniteCfg.setClientMode(false);
         igniteCfg.setPeerClassLoadingEnabled(true);
@@ -93,7 +86,7 @@ public class IgniteConfig {
         // Cache Configuration
         CacheConfiguration<String, Book> cacheCfg = new CacheConfiguration<>(BookCache.CACHE_NAME);
         cacheCfg.setAtomicityMode(CacheAtomicityMode.TRANSACTIONAL);
-        cacheCfg.setCacheStoreFactory(bookCacheStoreFactory);
+        cacheCfg.setCacheStoreFactory(new BookCacheStoreFactory(dataSource));
         /*cacheCfg.setCacheStoreSessionListenerFactories((Factory<CacheStoreSessionListener>) () -> {
             CacheSpringStoreSessionListener lsnr = new CacheSpringStoreSessionListener();
             lsnr.setDataSource(dataSource);
