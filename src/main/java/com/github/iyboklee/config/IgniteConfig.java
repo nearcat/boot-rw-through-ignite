@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 import java.util.List;
 
 import org.apache.ignite.Ignite;
+import org.apache.ignite.IgniteCache;
 import org.apache.ignite.IgniteException;
 import org.apache.ignite.Ignition;
 import org.apache.ignite.cache.CacheAtomicityMode;
@@ -103,6 +104,13 @@ public class IgniteConfig {
         Ignite ignite = Ignition.start(configuration);
         ignite.cluster().active(true);
         return ignite;
+    }
+
+    @Bean
+    public BookCache bookCache(Ignite ignite) {
+        IgniteCache<String, Book> cache = ignite.getOrCreateCache(BookCache.CACHE_NAME);
+        cache.loadCache(null, 6);
+        return new BookCache(cache);
     }
 
 }
