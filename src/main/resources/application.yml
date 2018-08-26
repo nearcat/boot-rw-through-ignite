@@ -15,4 +15,9 @@ ignite:
   cluster:
     nodes: 127.0.0.1:47500..47509
   cache:
-    hot-loading: 0
+    hotLoading: 0
+    writeBehind:
+      enabled: true
+      flush:
+        frequency: 5000
+        threads: 1

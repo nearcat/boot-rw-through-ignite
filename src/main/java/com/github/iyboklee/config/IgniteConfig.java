@@ -36,7 +36,10 @@ public class IgniteConfig {
 
     @Value("#{'${ignite.cluster.nodes}'.split(',')}") private List<String> nodes;
 
-    @Value("${ignite.cache.hotloading}") private int hotLoading;
+    @Value("${ignite.cache.hotLoading}") private int hotLoading;
+    @Value("${ignite.cache.writeBehind.enabled}") private boolean writeBehindEnabled;
+    @Value("${ignite.cache.writeBehind.flush.frequency}") private long writeBehindFlushFrequency;
+    @Value("${ignite.cache.writeBehind.flush.threads}") private int writeBehindFlushThreads;
 
     @Autowired private DataSourceProperties dataSourceProperties;
 
@@ -100,6 +103,11 @@ public class IgniteConfig {
         });*/
         cacheCfg.setReadThrough(true);
         cacheCfg.setWriteThrough(true);
+        cacheCfg.setWriteBehindEnabled(writeBehindEnabled);
+        if (writeBehindEnabled) {
+            cacheCfg.setWriteBehindFlushFrequency(writeBehindFlushFrequency);
+            cacheCfg.setWriteBehindFlushThreadCount(writeBehindFlushThreads);
+        }
         igniteCfg.setCacheConfiguration(cacheCfg);
         return igniteCfg;
     }
