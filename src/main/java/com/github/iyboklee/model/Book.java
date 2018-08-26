@@ -15,4 +15,6 @@ public class Book implements Serializable {
 
     private String title;
 
+    protected Book() {}
+
 }

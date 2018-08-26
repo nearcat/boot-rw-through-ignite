@@ -8,6 +8,7 @@ import org.apache.ignite.IgniteCache;
 import org.apache.ignite.IgniteException;
 import org.apache.ignite.Ignition;
 import org.apache.ignite.cache.CacheAtomicityMode;
+import org.apache.ignite.cache.CacheMode;
 import org.apache.ignite.configuration.CacheConfiguration;
 import org.apache.ignite.configuration.DataRegionConfiguration;
 import org.apache.ignite.configuration.DataStorageConfiguration;
@@ -34,6 +35,8 @@ import net.sf.log4jdbc.Log4jdbcProxyDataSource;
 public class IgniteConfig {
 
     @Value("#{'${ignite.cluster.nodes}'.split(',')}") private List<String> nodes;
+
+    @Value("${ignite.cache.hotloading}") private int hotLoading;
 
     @Autowired private DataSourceProperties dataSourceProperties;
 
@@ -86,6 +89,8 @@ public class IgniteConfig {
 
         // Cache Configuration
         CacheConfiguration<String, Book> cacheCfg = new CacheConfiguration<>(BookCache.CACHE_NAME);
+        cacheCfg.setCacheMode(CacheMode.PARTITIONED);
+        cacheCfg.setBackups(1);
         cacheCfg.setAtomicityMode(CacheAtomicityMode.TRANSACTIONAL);
         cacheCfg.setCacheStoreFactory(new BookCacheStoreFactory(dataSource));
         /*cacheCfg.setCacheStoreSessionListenerFactories((Factory<CacheStoreSessionListener>) () -> {
@@ -109,7 +114,8 @@ public class IgniteConfig {
     @Bean
     public BookCache bookCache(Ignite ignite) {
         IgniteCache<String, Book> cache = ignite.getOrCreateCache(BookCache.CACHE_NAME);
-        cache.loadCache(null, 6);
+        if (hotLoading > 0)
+            cache.loadCache(null, hotLoading);
         return new BookCache(cache);
     }
 

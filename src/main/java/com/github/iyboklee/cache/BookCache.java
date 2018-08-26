@@ -17,10 +17,11 @@ public class BookCache {
         return cache.get(isbn);
     }
 
-    public void put(String isbn, Book book) {
+    public Book put(String isbn, Book book) {
         assert isbn.equals(book.getIsbn());
 
         cache.put(isbn, book);
+        return book;
     }
 
     public void cacheClear(String isbn) {

@@ -64,7 +64,7 @@ public class BookCacheTest {
     public void STEP05_캐시에_값을_추가한다() {
         String isbn = "ISBN7";
 
-        bookCache.put(isbn, new Book(isbn, "Spring Boot With Ignite7"));
+        bookCache.put(isbn, new Book(isbn, "Spring boot With Apache Ignite 7"));
         assertThat("추가 후 캐시 갯수는 6개이다.", bookCache.size(), is(6));
 
         Book book = bookCache.findByIsbn(isbn);
